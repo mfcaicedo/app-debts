@@ -15,6 +15,8 @@ import { authInterceptor } from './auth/auth.interceptor';
 import { DatePipe } from '@angular/common';
 import { provideMarkdown } from 'ngx-markdown';
 import { loadingInterceptor } from './auth/loading.interceptor';
+import { DebtGateway } from './debts/domain/models/gateway/debt-gateway';
+import { DebtsService } from './debts/infrastructure/adapter/debts-api/debts.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,6 +47,7 @@ export const appConfig: ApplicationConfig = {
     ]),
     //Configuracion de la inyeccion de dependencias para el desacoplamiento de la capa de infraestructura
     { provide: UserGateway, useClass: UserManagementService },
+    { provide: DebtGateway, useClass: DebtsService },
   ]
 };
 

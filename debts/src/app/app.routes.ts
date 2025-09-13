@@ -22,8 +22,12 @@ export const routes: Routes = [
                 component: WelcomeComponent
             },
             {
-                path: 'gestion-usuarios',
+                path: 'usuarios',
                 loadChildren: () => import('./user-management/user-management.routes').then(m => m.routes)
+            },
+            {
+                path: 'deudas',
+                loadChildren: () => import('./debts/debts.routes').then(m => m.routes)
             },
         ]
     },
