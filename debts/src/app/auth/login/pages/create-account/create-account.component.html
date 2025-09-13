@@ -1,0 +1,112 @@
+<!-- header -->
+<div
+  class="flex flex-row align-items-center justify-content-center mt-3 my-1 shadow-1"
+>
+  <div class="bg-primary mr-2 px-3 pt-1">
+    <a class="layout-topbar-logo" routerLink="/login">
+      <img
+        src="assets/logo-unicauca.png"
+        alt="logo"
+        class=""
+        style="width: 150px"
+      />
+    </a>
+  </div>
+  <h3>Gestión de Deudas</h3>
+</div>
+<div
+  class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
+>
+  <div class="flex flex-column align-items-center justify-content-center">
+    <!-- Login -->
+    <div class="border-round-3xl shadow-5">
+      <!-- style="background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);"> -->
+      <div class="w-full surface-card py-8 px-5 border-round-3xl sm:px-8">
+        <div class="text-center mb-5">
+          <h1 class="text-primary">Crear cuenta</h1>
+        </div>
+        <div>
+          <form
+            action=""
+            [formGroup]="loginForm"
+            (submit)="onLoginFormSubmitted()"
+          >
+            <!-- <p-iconfield> -->
+            <div class="">
+              <label
+                for="username"
+                class="block text-primary text-lg font-medium mb-2"
+              >
+                Correo <span class="text-orange-500">*</span>
+              </label>
+              <input
+                id="username"
+                type="text"
+                formControlName="username"
+                placeholder="correo"
+                pInputText
+                class="w-full md:w-30rem"
+                style="padding: 1rem"
+              />
+              <!-- <p-inputicon styleClass="pi pi-spinner pi-spin" style="padding:1rem" /> -->
+              @if (this.loginForm.get('username')?.hasError('required') &&
+              this.loginForm.get('username')?.touched){
+              <div class="text-error text-sm mt-1">El correo es requerido</div>
+              } @if (this.loginForm.get('username')?.hasError('email') &&
+              this.loginForm.get('username')?.touched){
+              <div class="text-error text-sm mt-1">
+                Ingrese un correo válido
+              </div>
+              }
+
+              <!-- </p-iconfield> -->
+            </div>
+            <div class="mt-5">
+              <label
+                for="password"
+                class="block text-primary font-medium text-lg mb-2"
+              >
+                Contraseña <span class="text-orange-500">*</span>
+              </label>
+              <p-password
+                id="password"
+                promptLabel="Ingrese su contraseña"
+                formControlName="password"
+                placeholder="contraseña"
+                [toggleMask]="true"
+                styleClass=""
+                inputStyleClass="w-full p-3 md:w-30rem"
+              >
+              </p-password>
+              @if (this.loginForm.get('password')?.hasError('required') &&
+              this.loginForm.get('password')?.touched){
+              <div class="text-error text-sm mt-1">
+                La contraseña es requerida
+              </div>
+              }
+            </div>
+            <div
+              class="flex align-items-center justify-content-between mb-5 gap-5 mt-5"
+            >
+            </div>
+            <button
+              pButton
+              pRipple
+              [label]="!isLoadingLogin ? 'Crear cuenta' : ''"
+              [loading]="isLoadingLogin"
+              class="w-full p-3 text-xl border-round"
+            ></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Dialog alert -->
+  <p-toast />
+  <p-confirmdialog />
+</div>
+<!-- footer -->
+<div class="layout-footer">
+  <div class="">2025 | Gestión de deudas</div>
+  <div class="">Todos los derechos reservados | Versión 1.0.0</div>
+</div>
