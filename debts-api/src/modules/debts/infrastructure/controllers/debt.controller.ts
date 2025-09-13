@@ -25,18 +25,20 @@ import { UpdateDeptStatusUseCase } from '../../application/usecases/update-debt-
 import { GetAllDebtsFilterDto } from '../../domain/contracts/dtos/request/get-all-debts-filter-dto';
 import { Format } from '../../domain/enums/debt-status';
 import { ExportDebtsUseCase } from '../../application/usecases/export-debts.usecase';
+import { CachedDebtService } from '../services/cached-debts.service';
 
 @Controller('api/v1/debts')
 export class DebtController {
   constructor(
     private readonly debtRepo: DebtRepositoryImpl,
     private readonly userRepo: UserRepositoryImpl,
+    private readonly cacheService: CachedDebtService,
   ) {}
 
   @Post('create')
   async create(@Body() dto: CreateDebtDto) {
     try {
-      const useCase = new CreateDebtUseCase(this.debtRepo);
+      const useCase = new CreateDebtUseCase(this.debtRepo, this.cacheService);
       return await useCase.executeCreateDebt(
         dto.description,
         dto.amount,
@@ -57,12 +59,13 @@ export class DebtController {
     return new GetAllDebtsUseCase(
       this.debtRepo,
       this.userRepo,
+      this.cacheService,
     ).executeGetAllDebtsByUserId(dto);
   }
   @Put('update-debt')
   async updateDebt(@Body() dto: UpdateDebtDto) {
     try {
-      const useCase = new UpdateDebtUseCase(this.debtRepo);
+      const useCase = new UpdateDebtUseCase(this.debtRepo, this.cacheService);
       return await useCase.executeUpdateDebt(
         dto.debtId,
         dto.description,
@@ -76,7 +79,10 @@ export class DebtController {
   @Patch('update-debt-status/:debtId')
   async updateDebtStatus(@Param('debtId') debtId: number) {
     try {
-      const useCase = new UpdateDeptStatusUseCase(this.debtRepo);
+      const useCase = new UpdateDeptStatusUseCase(
+        this.debtRepo,
+        this.cacheService,
+      );
       return await useCase.executeUpdateDebtStatus(debtId);
     } catch (e: unknown) {
       throw new BadRequestException((e as Error).message);
@@ -86,7 +92,7 @@ export class DebtController {
   @Delete('delete-debt/:debtId')
   async deleteDebt(@Param('debtId') debtId: number) {
     try {
-      const useCase = new DeleteDebtUseCase(this.debtRepo);
+      const useCase = new DeleteDebtUseCase(this.debtRepo, this.cacheService);
       return await useCase.executeDeleteDebt(debtId);
     } catch (e: unknown) {
       throw new BadRequestException((e as Error).message);

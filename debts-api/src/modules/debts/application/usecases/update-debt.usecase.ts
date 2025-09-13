@@ -1,9 +1,13 @@
 import { DebtRepository } from '../../domain/contracts/debt.repository';
 import { Debt } from '../../domain/entities/debt.entity';
 import { DebtStatus } from '../../domain/enums/debt-status';
+import { CachedDebtService } from '../../infrastructure/services/cached-debts.service';
 
 export class UpdateDebtUseCase {
-  constructor(private readonly repo: DebtRepository) {}
+  constructor(
+    private readonly repo: DebtRepository,
+    private readonly cacheService: CachedDebtService,
+  ) {}
 
   async executeUpdateDebt(
     debtId: number,
@@ -25,6 +29,8 @@ export class UpdateDebtUseCase {
     existingDebt.amount = amount;
     existingDebt.status = status;
     existingDebt.updatedAt = new Date();
-    return this.repo.update(existingDebt);
+    const response = await this.repo.update(existingDebt);
+    await this.cacheService.invalidateCacheByUser(existingDebt.userId);
+    return response;
   }
 }
