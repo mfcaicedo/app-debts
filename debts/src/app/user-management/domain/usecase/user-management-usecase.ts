@@ -8,16 +8,8 @@ export class UserManagementUseCase {
 
     private readonly userGateway = inject(UserGateway);
 
-    getUserByUid(uid: string) {
-        return this.userGateway.getUserByUid(uid);
-    }
-
-    getPersonByUserId(userId: number) {
-        return this.userGateway.getPersonByUserId(userId);
-    }
-
-    getTeacherByPersonId(personId: number) {
-        return this.userGateway.getTeacherByPersonId(personId);
+    getUserByEmail(email: string) {
+        return this.userGateway.getUserByEmail(email);
     }
 
 }
