@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="">
+        <h2>
+            Detalle de la deuda
+        </h2>
+    </div>
+    <div class="container-form">
+        <form action="" [formGroup]="this.createDebtForm" (submit)="onSubmit()">
+            <div class="grid mb-3">
+                <div class="col-12 sm:col-6 md:col-4">
+                    <label for="amount" class="block text-primary text-md font-medium mb-2">
+                        Monto <span class="text-orange-500">*</span>
+                    </label>
+                    <p-inputnumber inputId="integeronly" formControlName="amount" class="w-full"
+                        placeholder="Ej: 50" />
+                </div>
+                <div class="col-12 sm:col-6 md:col-4">
+                    <label for="description" class="block text-primary text-md font-medium mb-2">
+                        Descripción de la deuda <span class="text-orange-500">*</span>
+                    </label>
+                    <textarea rows="3" placeholder="Ej: Deuda amigo" cols="31" pTextarea
+                        [autoResize]="true" formControlName="description">
+                    </textarea>
+                </div>
+            </div>
+
+            <div class="col-12 sm:col-3 flex flex-row gap-2 pl-0">
+                <button pButton severity="secondary" type="button" pRipple label="Volver" [disabled]="false"
+                    class="w-full border-round" [routerLink]="['../../']">
+                </button>
+            </div>
+        </form>
+    </div>
+    <!-- Dialog alert -->
+    <p-toast />
+    <p-confirmdialog />
+</div>
