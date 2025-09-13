@@ -16,14 +16,8 @@ export class UserManagementService extends UserGateway {
     super();
   }
 
-  override getAllUsersPaginated(): Observable<UserListPaginated[]> {
-    return this.http.get<UserListPaginated[]>(`${ENVIRONMENTS.GET_USERS_PAGINATED}`);
-  }
-  override getUserById(id: number): Observable<User> {
-    throw new Error('Method not implemented.');
-  }
-  override getUserByUid(uid: string): Observable<User> {
-    return this.http.get<User>(`${ENVIRONMENTS.GET_USER_BY_UID}/${uid}`);
+  override getUserByEmail(email: string): Observable<GenericResponse> {
+    return this.http.get<GenericResponse>(`${ENVIRONMENTS.GET_USER_BY_EMAIL}/${email}`);
   }
   override createUser(user: User): Observable<User> {
     throw new Error('Method not implemented.');
@@ -33,13 +27,6 @@ export class UserManagementService extends UserGateway {
   }
   override deleteUser(id: number): Observable<User> {
     throw new Error('Method not implemented.');
-  }
-
-  override getPersonByUserId(userId: number): Observable<GenericResponse> {
-    return this.http.get<GenericResponse>(`${ENVIRONMENTS.GET_PERSON_BY_USER_ID}/${userId}`);
-  }
-  override getTeacherByPersonId(personId: number): Observable<GenericResponse> {
-    return this.http.get<GenericResponse>(`${ENVIRONMENTS.GET_TEACHER_BY_PERSON_ID}/${personId}`);
   }
 
 }
