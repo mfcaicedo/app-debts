@@ -62,24 +62,11 @@ export class LoginComponent implements OnInit {
     this.isLoadingLogin = true;
     this.authService.login(this.loginForm.value as Login).subscribe({
       next: async (response) => {
-        // const loginSuccessData: LoginSuccess = {
-        //   accessToken: response.data.session.access_token,
-        //   refreshToken: response.data.session.refresh_token,
-        //   expiresIn: response.data.session.expires_in,
-        //   expiresAt: response.data.session.expires_at,
-        //   tokenType: response.data.session.token_type,
-        //   notBeforePolicy: 0,
-        //   sessionState: response.data.user.aud
-        // };
         if (response.data.session !== null) {
 
           // Actualiza el estado de autenticación
           this.authService.updateAuthStatus();
-
-          //Consulto datos del usuario 
-          await this.getUserByUid(response.data.user.id);
-          await this.getPersonByUserId();
-          await this.getTeacherByPersonId();
+          this.userDataSession.email = this.loginForm.value.username;
           this.authService.setUserDataSession(this.userDataSession);
 
           this.authService.getSession().pipe(take(1)).subscribe(() => {
@@ -107,9 +94,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  async getUserByUid(uid: string) {
+  async getUserByEmail(uid: string) {
     return new Promise((resolve) => {
-      this.userManagementUseCase.getUserByUid(uid).subscribe({
+      this.userManagementUseCase.getUserByEmail(uid).subscribe({
         next: (response: any) => {
           this.userDataSession.userId = response.userId;
           this.userDataSession.email = response.email;
@@ -122,43 +109,6 @@ export class LoginComponent implements OnInit {
         }
       });
     });
-  }
-
-  async getPersonByUserId() {
-    return new Promise((resolve) => {
-      this.userManagementUseCase.getPersonByUserId(this.userDataSession.userId ?? 0).subscribe({
-        next: (response: any) => {
-          this.userDataSession.personId = response.personId;
-          this.userDataSession.nombres = `${response.firstName ?? ''} ${response.secondName ?? ''}`.trim();
-          this.userDataSession.apellidos = `${response.firstLastName ?? ''} ${response.secondLastName ?? ''}`.trim();
-          this.userDataSession.configurationId = response.configurationId;
-          resolve(true);
-        },
-        error: (error) => {
-          resolve(false);
-          console.log("error", error);
-        }
-      });
-    });
-  }
-
-  async getTeacherByPersonId() {
-
-    return new Promise((resolve) => {
-      this.userManagementUseCase.getTeacherByPersonId(this.userDataSession.personId ?? 0).subscribe({
-        next: (response: any) => {
-          if (response !== null) {
-            this.userDataSession.teacherId = response.teacherId;
-          }
-          resolve(true);
-        },
-        error: (error) => {
-          resolve(false);
-          console.log("error", error);
-        }
-      });
-    });
-
   }
 
 }

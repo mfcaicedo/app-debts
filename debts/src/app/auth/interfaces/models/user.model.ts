@@ -1,4 +1,5 @@
 export interface User {
+    [x: string]: any;
     userId: number;
     uid: string;
     username: string;
