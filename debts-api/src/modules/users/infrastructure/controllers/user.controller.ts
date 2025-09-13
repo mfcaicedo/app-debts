@@ -1,7 +1,15 @@
-import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  BadRequestException,
+  Get,
+  Param,
+} from '@nestjs/common';
 import { UserRepositoryImpl } from '../repositories/user-repository-impl';
 import { RegisterUserDto } from '../../domain/contracts/dtos/request/register-user-dto';
 import { RegisterUserUseCase } from '../../application/usecases/register-user.usecase';
+import { GetUserByEmailUseCase } from '../../application/usecases/get-user-by-email.usecase';
 
 @Controller('api/v1/users')
 export class UserController {
@@ -18,6 +26,16 @@ export class UserController {
         createdAt: user.createdAt,
         updateAt: user.updatedAt,
       };
+    } catch (e: unknown) {
+      throw new BadRequestException((e as Error).message);
+    }
+  }
+
+  @Get('get-user-by-email/:email')
+  async getUserByEmail(@Param('email') email: string) {
+    try {
+      const useCase = new GetUserByEmailUseCase(this.userRepo);
+      return await useCase.execute(email);
     } catch (e: unknown) {
       throw new BadRequestException((e as Error).message);
     }
