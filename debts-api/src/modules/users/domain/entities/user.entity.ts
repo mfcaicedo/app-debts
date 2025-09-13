@@ -4,6 +4,6 @@ export class User {
     public readonly passwordHash: string,
     public readonly createdAt?: Date,
     public readonly updatedAt?: Date,
-    public readonly id?: number,
+    public readonly userId?: number,
   ) {}
 }

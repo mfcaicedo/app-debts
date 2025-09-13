@@ -25,7 +25,7 @@ export class UserRepositoryImpl implements UserRepository {
       saved.passwordHash,
       saved.createdAt,
       saved.updatedAt,
-      saved.id,
+      saved.userId,
     );
   }
 
@@ -37,8 +37,13 @@ export class UserRepositoryImpl implements UserRepository {
           found.passwordHash,
           found.createdAt,
           found.updatedAt,
-          found.id,
+          found.userId,
         )
       : null;
+  }
+
+  async findById(userId: number): Promise<boolean | null> {
+    const found = await this.repo.findOne({ where: { userId } });
+    return found ? true : null;
   }
 }

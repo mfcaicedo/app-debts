@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
-import { UserRepository } from '../../domain/contracts/user-repository';
-import { User } from '../../domain/entities/user.entity';
+import { UserRepository } from 'src/modules/users/domain/contracts/user-repository';
+import { User } from 'src/modules/users/domain/entities/user.entity';
 
 export class RegisterUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
