@@ -14,6 +14,7 @@ const ENVIRONMENTS = {
 
     //USER MANAGEMENT
     GET_USER_BY_EMAIL: `${base_url_api_debts}/users/get-user-by-email`,
+    CREATE_USER: `${base_url_api_debts}/users/register`,
 
     //DEBTS
     CREATE_DEBT: `${base_url_api_debts}/debts/create`,

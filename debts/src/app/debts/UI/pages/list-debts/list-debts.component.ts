@@ -100,6 +100,7 @@ export class ListDebtsComponent {
           this.userId = user.userId;
           this.requestFilter.userId = this.userId;
         }
+        this.getAllDebtsByUserId();
       },
       error: () => {
         this.messageService.add({
@@ -109,7 +110,6 @@ export class ListDebtsComponent {
         });
       },
     });
-    await this.getAllDebtsByUserId();
   }
 
   async getAllDebtsByUserId() {
@@ -166,11 +166,15 @@ export class ListDebtsComponent {
   }
 
   createDebt() {
-    this.router.navigate(['./crear-deuda'],  { relativeTo: this.activatedRoute });
+    this.router.navigate(['./crear-deuda'], {
+      relativeTo: this.activatedRoute,
+    });
   }
 
   viewDebt(debtId: number) {
-    this.router.navigate(['./ver-detalle-deuda', debtId], { relativeTo: this.activatedRoute });
+    this.router.navigate(['./ver-detalle-deuda', debtId], {
+      relativeTo: this.activatedRoute,
+    });
   }
 
   deleteDebt(debtId: number) {

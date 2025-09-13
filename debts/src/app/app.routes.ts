@@ -13,6 +13,11 @@ export const routes: Routes = [
         loadComponent: () => import('./auth/login/pages/login.component').then(m => m.LoginComponent),
     },
     {
+        path: 'crear-cuenta',
+        canActivate: [accountGuard],
+        loadComponent: () => import('./auth/login/pages/create-account/create-account.component').then(m => m.CreateAccountComponent),
+    },
+    {
         path: '',
         component: AppLayoutComponent,
         canActivate: [authGuard],

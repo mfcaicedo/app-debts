@@ -96,6 +96,10 @@
         <p-message severity="info" text="No hay deudas registradas para usted
             enviadas." icon="pi pi-info-circle">
         </p-message>
+        <button pButton pRipple type="button" class="border-round mt-5" [ngStyle]="{ 'width': '30%' }"
+        (click)="createDebt()">
+            Crear nueva deuda
+        </button>
     </div>
     }
     <!-- Dialog alert -->

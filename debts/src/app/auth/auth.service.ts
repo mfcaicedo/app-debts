@@ -9,6 +9,7 @@ import { IS_PUBLIC } from './auth.interceptor';
 import ENVIRONMENTS from '../../environments/config';
 import { createClient, Session, SupabaseClient } from '@supabase/supabase-js'
 import { UserDataSession } from './login/interfaces/models/user-data-session.model';
+import { GenericResponse } from '../shared/utils/models/request-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -125,12 +126,16 @@ export class AuthService {
 
   }
 
-  createUser(email: string, password: string = "Gspri2025."): Observable<any> {
-
+  createUser(email: string, password: string): Observable<any> {
+    //Reistro usuario en el auth de supabase
     return from(this.supabase.auth.signUp({
       email: email,
       password: password,
     }));
+  }
+
+  createUserDb(email: string, password: string):  Observable<GenericResponse>{
+    return this.http.post<GenericResponse>(`${ENVIRONMENTS.CREATE_USER}`, { email, password });
   }
 
   setUserDataSession(userData: Partial<UserDataSession>) {

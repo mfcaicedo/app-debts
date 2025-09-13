@@ -14,7 +14,6 @@ export class LoadingService {
   }
 
   hide() {
-    console.log("ocultamos ");
     this._loading.next(false);
   }
 }
